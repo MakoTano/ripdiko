@@ -106,7 +106,9 @@ class DownloadTask
 
   def now_playing(station, area)
     now = Time.now
-    doc = Nokogiri::XML(URI.parse("https://radiko.jp/v2/api/program/now?area_id=#{area}").open)
+    now = Time.now - 60 * 60 * 24 if now.hour >= 0 && now.hour <  5 # 前日のカレンダーを参照する
+
+    doc = Nokogiri::XML(URI.parse("https://radiko.jp/v3/program/date/#{now.strftime("%Y%m%d")}/#{area}.xml").open)
 
     node = doc.xpath(%Q|//station[@id="#{station}"]|).first
     node.xpath(".//prog").each do |prog|
@@ -120,7 +122,7 @@ class DownloadTask
           from: from,
           to: to,
           duration: prog[:dur].to_i,
-          subtitle: val(prog, :sub_title),
+          subtitle: val(prog, :desc),
           performer: val(prog, :pfm),
           info: val(prog, :info),
         )
