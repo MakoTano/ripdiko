@@ -1,3 +1,9 @@
+# 個人的修正
+番組APIでデータを取得するとき、直前に2-3分の細かい番組が2つ続いくとv2 APIの現在番組表APIがうまくデータを取得できない。
+日付別のv3の番組表APIへ切り替えた。
+
+※困っているのは乃木坂ANN
+
 # ripdiko
 
 ripdiko rips radiko.jp streams and encodes them in MP3. Metadata such as program title, station name and recording length is automatically determined by fetching the metadata via Radiko's (supposedly unofficial) API, and embedded in the output audio file.
