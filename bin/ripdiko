@@ -106,9 +106,9 @@ class DownloadTask
 
   def now_playing(station, area)
     now = Time.now
-    now = Time.now - 60 * 60 * 24 if now.hour >= 0 && now.hour <  5 # 前日のカレンダーを参照する
+    calender_now = now - 60 * 60 * 24 if now.hour >= 0 && now.hour <  5 # 前日のカレンダーを参照する
 
-    doc = Nokogiri::XML(URI.parse("https://radiko.jp/v3/program/date/#{now.strftime("%Y%m%d")}/#{area}.xml").open)
+    doc = Nokogiri::XML(URI.parse("https://radiko.jp/v3/program/date/#{calender_now.strftime("%Y%m%d")}/#{area}.xml").open)
 
     node = doc.xpath(%Q|//station[@id="#{station}"]|).first
     node.xpath(".//prog").each do |prog|
